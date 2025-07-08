@@ -31,29 +31,20 @@ namespace MyPlayer
             UpdateMovements();
             UpdateRotation();
         }
-        bool doubleJumped = false;
         void UpdateMovements()
         {
             rb.linearVelocityX = Input.GetAxisRaw("Horizontal") * moveSpeed;
-            if (isGrounded)
-            {
-                doubleJumped = false;
-                if(Input.GetKeyDown(KeyCode.Space)) rb.linearVelocityY = jumpPower;
-            }
-            else
-            {
-                if(!doubleJumped && Input.GetKeyDown(KeyCode.Space))
-                {
-                    rb.linearVelocityY = jumpPower;
-                    doubleJumped = true;
-                }
-            }
+            if (isGrounded && Input.GetKeyDown(KeyCode.Space)) rb.linearVelocityY = jumpPower;
         }
         void UpdateRotation()
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             flipPart.localScale = new Vector3(
                 mousePos.x > transform.position.x ? 1.0f : -1.0f, 1.0f, 1.0f);
+        }
+        private void OnDisable()
+        {
+            rb.linearVelocityX = 0.0f;
         }
     }
 }

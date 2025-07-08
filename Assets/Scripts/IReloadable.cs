@@ -2,5 +2,6 @@ using MyPlayer;
 
 public interface IReloadable
 {
-    public void Reload(Player wielder);
+    public void Reload(Entity wielder);
+    public bool shouldReload { get; }
 }

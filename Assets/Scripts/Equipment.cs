@@ -3,12 +3,14 @@ using MyPlayer;
 
 public abstract class Equipment : MonoBehaviour
 {
-    public virtual void OnEquip(Player wielder)
+    public Sprite equipmentIcon;
+    public virtual void Init() { }
+    public virtual void OnEquip(Entity wielder)
     {
         gameObject.SetActive(true);
     }
-    public virtual void OnEquipUpdate(Player wielder) { }
-    public virtual void OnUnequip(Player wielder)
+    public virtual void OnEquipUpdate(Entity wielder) { }
+    public virtual void OnUnequip(Entity wielder)
     {
         gameObject.SetActive(false);
     }

@@ -13,7 +13,6 @@ public class Bullet : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(transform.right);
         transform.Translate(transform.right * (transform.localScale.x > 0 ? 1.0f : -1.0f) * speed * Time.deltaTime);
         counter += Time.deltaTime;
         if (counter * speed > range) Destroy(gameObject);
@@ -22,7 +21,10 @@ public class Bullet : MonoBehaviour
     {
         GameObject hit = collision.attachedRigidbody != null ? collision.attachedRigidbody.gameObject : collision.gameObject;
 
-        if (hit.TryGetComponent(out IDamagable damagable)) damagable.GetDamage(damage);
+        if (hit.TryGetComponent(out IDamagable damagable))
+        {
+            if (!damagable.GetDamage(damage)) return;
+        }
         Destroy(gameObject);
     }
 }

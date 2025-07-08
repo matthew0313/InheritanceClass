@@ -6,8 +6,8 @@ public class AnimatedBarUI : MonoBehaviour
 {
     [SerializeField] Image bar, reduceBar, refillBar;
     [SerializeField] float lerpRate = 3.0f;
-    [SerializeField] float waitTime = 1.0f;
     [SerializeField] float m_targetScale = 1.0f;
+    float counter = 0.0f;
     public float targetScale
     {
         get => m_targetScale;
@@ -18,9 +18,9 @@ public class AnimatedBarUI : MonoBehaviour
         }
     }
     float currentScale = 1.0f;
-    private void Update()
+    protected virtual void Update()
     {
-        currentScale = Mathf.Lerp(currentScale, targetScale, lerpRate * Time.deltaTime);
+        if(counter <= 0.0f) currentScale = Mathf.Lerp(currentScale, targetScale, lerpRate * Time.deltaTime);
         UpdateBar();
     }
     void UpdateBar()

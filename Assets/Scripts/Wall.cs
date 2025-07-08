@@ -7,14 +7,15 @@ public class Wall : MonoBehaviour, IDamagable
 
     bool broken = false;
     int counter = 0;
-    public void GetDamage(float damage)
+    public bool GetDamage(float damage)
     {
-        if (broken) return;
+        if (broken) return false;
         if (++counter >= hitsNeeded)
         {
             broken = true;
             anim.SetTrigger("Break");
         }
         else anim.SetTrigger("Hit");
+        return true;
     }
 }

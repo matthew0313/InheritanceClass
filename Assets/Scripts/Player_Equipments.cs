@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace MyPlayer
 {
@@ -8,14 +10,12 @@ namespace MyPlayer
         Player origin;
 
         public List<Equipment> equipments;
-        public int equippedIndex = 0;
-        Equipment equipped;
+        public int equippedIndex { get; private set; } = 0;
+        public Equipment equipped { get; private set; }
         private void Awake()
         {
             origin = GetComponent<Player>();
-        }
-        private void Start()
-        {
+            foreach (var i in equipments) i.Init();
             SwitchEquipment(0);
         }
         private void Update()
@@ -38,6 +38,14 @@ namespace MyPlayer
             equipped = equipments[index];
             equipped.OnEquip(origin);
             equippedIndex = index;
+        }
+        private void OnDisable()
+        {
+            equipped.OnUnequip(origin);
+        }
+        private void OnEnable()
+        {
+            equipped.OnEquip(origin);
         }
     }
 }

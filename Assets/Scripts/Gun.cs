@@ -1,7 +1,7 @@
 using UnityEngine;
 using MyPlayer;
 using System.Collections;
-using AudioManagement;
+using System;
 
 public class Gun : Equipment, IUsable, IReloadable, ITextDisplayed
 {
@@ -12,38 +12,43 @@ public class Gun : Equipment, IUsable, IReloadable, ITextDisplayed
     [SerializeField] float reloadTime;
     [SerializeField] Transform firePoint;
     [SerializeField] Bullet bullet;
-    [SerializeField] Sound fireSound, reloadSound;
+    [SerializeField] AudioSource fireSound, reloadSound;
+
+    public string textDisplayed => isReloading ? "Reloading..." : $"{mag}/{magSize}";
 
     bool isReloading = false;
-    int mag = -1;
+    public int mag { get; private set; }
     float counter = 0.0f;
     Coroutine reloading;
 
-    public string textDisplayed => $"{mag}/{magSize}";
-    public override void OnEquip(Player wielder)
+    public override void Init()
+    {
+        base.Init();
+        mag = magSize;
+    }
+    public override void OnEquip(Entity wielder)
     {
         base.OnEquip(wielder);
         counter = 0.0f;
-        if (mag == -1) mag = magSize;
     }
-    public override void OnEquipUpdate(Player wielder)
+    public override void OnEquipUpdate(Entity wielder)
     {
         base.OnEquipUpdate(wielder);
         counter += Time.deltaTime;
     }
 
-    public void Use(Player wielder, bool down)
+    public void Use(Entity wielder, bool down)
     {
         if (!auto && !down || isReloading || counter < fireRate || mag <= 0) return;
         counter = 0.0f;
         mag--;
         Fire();
     }
-    PlayingAudio reloadingSound = null;
-    public void Reload(Player wielder)
+    public bool shouldReload => mag <= 0;
+    public void Reload(Entity wielder)
     {
         if (isReloading || mag == magSize) return;
-        reloadingSound = AudioManager.Instance.PlaySound(reloadSound);
+        reloadSound.Play();
         anim.SetTrigger("Reload");
         isReloading = true;
         reloading = StartCoroutine(Reloading());
@@ -56,7 +61,7 @@ public class Gun : Equipment, IUsable, IReloadable, ITextDisplayed
     }
     void Fire()
     {
-        AudioManager.Instance.PlaySound(fireSound);
+        fireSound.Play();
         anim.SetTrigger("Fire");
         for(int i = 0; i < shotCount; i++)
         {
@@ -65,12 +70,11 @@ public class Gun : Equipment, IUsable, IReloadable, ITextDisplayed
             bul.Set(damage, range, bulletSpeed);
         }
     }
-    public override void OnUnequip(Player wielder)
+    public override void OnUnequip(Entity wielder)
     {
         base.OnUnequip(wielder);
         if (isReloading)
         {
-            reloadingSound.Stop();
             StopCoroutine(reloading);
             isReloading = false;
         }
