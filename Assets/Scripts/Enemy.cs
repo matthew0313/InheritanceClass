@@ -4,7 +4,7 @@ using UnityEngine;
 using static UnityEngine.UI.Image;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Enemy : Entity, IDamagable
+public class Enemy : Entity
 {
     [SerializeField] Animator anim;
 
@@ -16,10 +16,6 @@ public class Enemy : Entity, IDamagable
     [SerializeField] float roamSpeed = 2.0f, roamInterval = 3.0f, roamRange = 5.0f, roamTimeout = 5.0f;
     [SerializeField] float chaseSpeed = 5.0f, maxDistance = 3.0f, minDistance = 2.0f, backstepSpeed = 1.0f, jumpPower = 15.0f;
     [SerializeField] float jumpYDifference = 2.0f;
-
-    [Header("Equipment")]
-    [SerializeField] Equipment equipment;
-    [SerializeField] float equipmentUseDist = 10.0f;
 
     [Header("Ground Scanning")]
     [SerializeField] Vector2 groundScanOffset;
@@ -68,24 +64,16 @@ public class Enemy : Entity, IDamagable
         originPos = transform.position;
         hp = maxHp;
 
-        if(equipment != null)
-        {
-            equipment.Init();
-            equipment.OnEquip(this);
-        }
-
         topLayer = new(this, null);
         topLayer.OnStateEnter();
     }
     private void Update()
     {
         topLayer.OnStateUpdate();
-        if (!dead && equipment != null) equipment.OnEquipUpdate(this);
     }
     void DetectedUpdate()
     {
-        if (equipment is IUsable usable && playerDist <= equipmentUseDist) usable.Use(this, true);
-        if (equipment is IReloadable reloadable && reloadable.shouldReload) reloadable.Reload(this);
+
     }
     public bool GetDamage(float damage)
     {
@@ -94,7 +82,6 @@ public class Enemy : Entity, IDamagable
         hp = Mathf.Max(hp - damage, 0.0f);
         if(hp <= 0)
         {
-            if (equipment != null) equipment.OnUnequip(this);
             anim.SetTrigger("Dead");
             dead = true;
         }
@@ -123,11 +110,6 @@ public class Enemy : Entity, IDamagable
                 defaultState = new WaitThen<Enemy>(origin, this, () => origin.roamInterval, () => ChangeState("Roaming"));
                 AddState("Waiting", defaultState);
                 AddState("Roaming", new Roaming(origin, this));
-            }
-            public override void OnStateEnter()
-            {
-                base.OnStateEnter();
-                if (origin.equipment is IReloadable reloadable) reloadable.Reload(origin);
             }
             public override void OnStateUpdate()
             {

@@ -641,7 +641,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 802264733334882728}
-  - component: {fileID: 2737762722807680273}
   - component: {fileID: 8522650084086938865}
   m_Layer: 6
   m_Name: Sword
@@ -668,24 +667,6 @@ Transform:
   - {fileID: 4064138230566219005}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2737762722807680273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7304786606743220254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 216c89e205f6d0e4f9f803991906041f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  equipmentIcon: {fileID: 21300000, guid: 5f08448681f302a4ea321cfebc3c98f5, type: 3}
-  anim: {fileID: 7447643644735415002}
-  damage: 35
-  slashRate: 1
-  slashSound: {fileID: 8217963881062637609}
-  hitSound: {fileID: 2409309453942233264}
 --- !u!50 &8522650084086938865
 Rigidbody2D:
   serializedVersion: 5

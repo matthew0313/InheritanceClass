@@ -17,14 +17,4 @@ public class Bullet : MonoBehaviour
         counter += Time.deltaTime;
         if (counter * speed > range) Destroy(gameObject);
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        GameObject hit = collision.attachedRigidbody != null ? collision.attachedRigidbody.gameObject : collision.gameObject;
-
-        if (hit.TryGetComponent(out IDamagable damagable))
-        {
-            if (!damagable.GetDamage(damage)) return;
-        }
-        Destroy(gameObject);
-    }
 }
