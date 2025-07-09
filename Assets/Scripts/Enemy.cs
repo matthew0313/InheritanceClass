@@ -75,18 +75,6 @@ public class Enemy : Entity
     {
 
     }
-    public bool GetDamage(float damage)
-    {
-        if (dead) return false;
-        anim.SetTrigger("Damage");
-        hp = Mathf.Max(hp - damage, 0.0f);
-        if(hp <= 0)
-        {
-            anim.SetTrigger("Dead");
-            dead = true;
-        }
-        return true;
-    }
     bool IsPlayerDetectable()
     {
         return 
