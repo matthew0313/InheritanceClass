@@ -24,8 +24,8 @@ public class Enemy : Entity
 
     [Header("HP")]
     public float maxHp = 100.0f;
-    public float hp { get; private set; }
-    public bool dead { get; private set; } = false;
+    public float hp;
+    public bool dead = false;
 
     bool isGrounded => Physics2D.OverlapBox((Vector2)transform.position + groundScanOffset, groundScanBoxSize, 0.0f, groundScanMask) != null;
     float playerDist => Vector2.Distance(player.transform.position, transform.position);
