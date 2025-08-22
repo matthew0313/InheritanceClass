@@ -18718,6 +18718,7 @@ GameObject:
   - component: {fileID: 997206082}
   - component: {fileID: 997206081}
   - component: {fileID: 997206080}
+  - component: {fileID: 997206086}
   - component: {fileID: 997206079}
   - component: {fileID: 997206085}
   m_Layer: 6
@@ -18787,6 +18788,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 997206085}
+  movements: {fileID: 0}
+  hpComp: {fileID: 0}
 --- !u!4 &997206082
 Transform:
   m_ObjectHideFlags: 0
@@ -18827,6 +18830,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &997206086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997206078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a67c6efc1f4844b41840bd4c7c62be2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnTime: 3
+  respawnPoint: {fileID: 1002479779}
+  maxHp: 100
+  hp: 0
+  dead: 0
 --- !u!1 &998398470
 GameObject:
   m_ObjectHideFlags: 0
@@ -19820,6 +19840,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   maxHp: 100
+  hp: 0
+  dead: 0
 --- !u!50 &1698271042
 Rigidbody2D:
   serializedVersion: 5
