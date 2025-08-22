@@ -81,6 +81,7 @@ public class Enemy : Entity, IDamagable
     {
         topLayer.OnStateUpdate();
         if (!dead && equipment != null) equipment.OnEquipUpdate(this);
+        if (IsPlayerDetectable()) DetectedUpdate();
     }
     void DetectedUpdate()
     {
@@ -203,7 +204,6 @@ public class Enemy : Entity, IDamagable
                 {
                     origin.rb.linearVelocityY = origin.jumpPower;
                 }
-                origin.DetectedUpdate();
             }
             class Chasing : State<Enemy>
             {
