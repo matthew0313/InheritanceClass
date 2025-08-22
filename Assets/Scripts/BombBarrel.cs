@@ -17,13 +17,17 @@ public class BombBarrel : MonoBehaviour, IDamagable
     {
         if (exploded) return false;
         exploded = true;
+        Explode();
+        return true;
+    }
+    void Explode()
+    {
         anim.SetTrigger("Explode");
         explodeSound.Play();
-        foreach(var i in Physics2D.OverlapCircleAll(transform.position, explosionRadius, hitMask))
+        foreach (var i in Physics2D.OverlapCircleAll(transform.position, explosionRadius, hitMask))
         {
             GameObject hit = i.attachedRigidbody != null ? i.attachedRigidbody.gameObject : i.gameObject;
             if (hit.TryGetComponent(out IDamagable damagable)) damagable.GetDamage(this.damage);
         }
-        return true;
     }
 }
