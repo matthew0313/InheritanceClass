@@ -10,8 +10,8 @@ namespace MyPlayer
         [SerializeField] float respawnTime = 3.0f;
         [SerializeField] Transform respawnPoint;
         public float maxHp;
-        public float hp { get; private set; }
-        public bool dead { get; private set; } = false;
+        public float hp;
+        public bool dead = false;
         private void Awake()
         {
             origin = GetComponent<Player>();

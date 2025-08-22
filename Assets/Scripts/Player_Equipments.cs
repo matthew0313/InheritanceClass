@@ -8,10 +8,9 @@ namespace MyPlayer
     public class Player_Equipments : MonoBehaviour
     {
         Player origin;
-
         public List<Equipment> equipments;
-        public int equippedIndex { get; private set; } = 0;
-        public Equipment equipped { get; private set; }
+        public int equippedIndex = 0;
+        public Equipment equipped;
         private void Awake()
         {
             origin = GetComponent<Player>();
