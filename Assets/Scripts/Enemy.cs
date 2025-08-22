@@ -70,6 +70,7 @@ public class Enemy : Entity
     private void Update()
     {
         topLayer.OnStateUpdate();
+        if (IsPlayerDetectable()) DetectedUpdate();
     }
     void DetectedUpdate()
     {
@@ -173,7 +174,6 @@ public class Enemy : Entity
                 {
                     origin.rb.linearVelocityY = origin.jumpPower;
                 }
-                origin.DetectedUpdate();
             }
             class Chasing : State<Enemy>
             {
